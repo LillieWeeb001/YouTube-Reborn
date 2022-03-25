@@ -79,6 +79,7 @@
 // Tweak Variables
 
 extern NSString *videoTime;
+extern UIColor *rebornCustomColour;
 extern NSURL *directURL;
 extern NSURL *streamURL;
 

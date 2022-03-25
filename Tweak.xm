@@ -9,6 +9,7 @@
 #import "Tweak.h"
 
 NSString *YTApiKey = @"AIzaSyAcHI73xntvCiURGWERFcJxm5vX12p5bN8";
+UIColor *rebornCustomColour;
 
 UIColor *hexColour() {
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:@"kYTRebornColourOptionsVTwo"];
@@ -65,7 +66,7 @@ YTUserDefaults *ytThemeSettings;
 
         UIView *rebornView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, childView.bounds.size.width, 51)];
         [rebornView setUserInteractionEnabled:YES];
-        rebornView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
+        rebornView.backgroundColor = [UIColor clearColor];
 
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, rebornView.frame.size.width, 51)];
         label.text = @"YT Reborn Settings";
@@ -1120,55 +1121,55 @@ NSURL *streamURL;
 %hook UIView
 - (void)setBackgroundColor:(UIColor *)color {
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTPivotBarView")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTSlideForActionsView")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTChipCloudCell")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTEngagementPanelView")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTPlaylistPanelProminentThumbnailVideoCell")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTPlaylistHeaderView")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTAsyncCollectionView")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTLinkCell")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTMessageCell")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTSearchView")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTDrawerAvatarCell")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTFeedHeaderView")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatTextCell")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatViewerEngagementCell")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YTCommentsHeaderView")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatView")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     if([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatTickerViewController")]) {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     %orig;
 }
@@ -1186,232 +1187,232 @@ NSURL *streamURL;
     } else if([self.nextResponder isKindOfClass:NSClassFromString(@"YTFullscreenMetadataHighlightsCollectionViewController")]) {
         color = [[UIColor blackColor] colorWithAlphaComponent:0.0];
     } else {
-        color = hexColour();
+        color = rebornCustomColour;
     }
     %orig;
 }
 %end
 %hook YTPivotBarView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTHeaderView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTSubheaderContainerView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTAppView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTChannelListSubMenuView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTSlideForActionsView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTPageView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTWatchView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTPlaylistMiniBarView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTEngagementPanelHeaderView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTPlaylistPanelControlsView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTHorizontalCardListView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTWatchMiniBarView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTCreateCommentAccessoryView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTCreateCommentTextView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTSearchView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTVideoView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTSearchBoxView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTTabTitlesView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTPrivacyTosFooterView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTOfflineStorageUsageView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTInlineSignInView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTFeedChannelFilterHeaderView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YCHLiveChatView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YCHLiveChatActionPanelView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTEmojiTextView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTTopAlignedView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 - (void)layoutSubviews {
     %orig();
-    MSHookIvar<YTTopAlignedView *>(self, "_contentView").backgroundColor = hexColour();
+    MSHookIvar<YTTopAlignedView *>(self, "_contentView").backgroundColor = rebornCustomColour;
 }
 %end
 %hook GOODialogView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTNavigationBar
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 - (void)setBarTintColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTChannelMobileHeaderView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTChannelSubMenuView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTWrapperSplitView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTReelShelfCell
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTReelShelfItemView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTReelShelfView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
 %hook YTCommentView
 - (void)setBackgroundColor:(UIColor *)color {
-    color = hexColour();
+    color = rebornCustomColour;
     %orig;
 }
 %end
@@ -1419,7 +1420,7 @@ NSURL *streamURL;
 - (void)layoutSubviews {
 	%orig();
 	MSHookIvar<UIImageView *>(self, "_bannerContainerImageView").hidden = YES;
-    MSHookIvar<UIView *>(self, "_bannerContainerView").backgroundColor = hexColour();
+    MSHookIvar<UIView *>(self, "_bannerContainerView").backgroundColor = rebornCustomColour;
 }
 %end
 %hook YTSearchSuggestionCollectionViewCell
@@ -1569,6 +1570,10 @@ int selectedTabIndex = 0;
 }
 %end
 
+static void colourPrefsChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+    rebornCustomColour = hexColour();
+}
+
 %ctor {
     @autoreleasepool {
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"kEnableNoVideoAds"] == nil) {
@@ -1627,6 +1632,8 @@ int selectedTabIndex = 0;
         [unarchiver setRequiresSecureCoding:NO];
         NSString *hexString = [unarchiver decodeObjectForKey:NSKeyedArchiveRootObjectKey];
         if(hexString != nil) {
+            rebornCustomColour = hexColour();
+            CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)colourPrefsChanged, CFSTR("h.ryan.youtubereborn.prefs.colour"), NULL, CFNotificationSuspensionBehaviorCoalesce);
             %init(gColourOptions);
         }
         %init(_ungrouped);
