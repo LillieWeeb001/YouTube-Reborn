@@ -47,7 +47,7 @@ static int __isOSVersionAtLeast(int major, int minor, int patch) { NSOperatingSy
         return 1;
     }
     if (section == 2) {
-        return 5;
+        return [[NSUserDefaults standardUserDefaults] boolForKey:@"kHideTabBar"] ? 0 : 5;
     }
     return 0;
 }
@@ -206,15 +206,21 @@ static int __isOSVersionAtLeast(int major, int minor, int patch) { NSOperatingSy
 }
 
 - (void)toggleHideTabBar:(UISwitch *)sender {
+    NSMutableArray* indexPaths = [NSMutableArray array];
+    for (int i = 0; i < 5; i++) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:2]];
+    }
+    [self.tableView beginUpdates];
     if ([sender isOn]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kHideTabBar"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self.tableView reloadData];
+        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
     } else {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"kHideTabBar"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self.tableView reloadData];
+        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
     }
+    [self.tableView endUpdates];
 }
 
 - (void)toggleHideTabBarLabels:(UISwitch *)sender {
