@@ -85,6 +85,8 @@ static int __isOSVersionAtLeast(int major, int minor, int patch) { NSOperatingSy
         if(indexPath.row == 0) {
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kYTRebornColourOptionsVTwo"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            [[UIApplication sharedApplication] suspend];
+            [NSThread sleepForTimeInterval:0.7];
             exit(0);
         }
     }

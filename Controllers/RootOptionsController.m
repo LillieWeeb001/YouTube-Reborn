@@ -355,7 +355,9 @@ static int __isOSVersionAtLeast(int major, int minor, int patch) { NSOperatingSy
 }
 
 - (void)apply {
-    exit(0); 
+    [[UIApplication sharedApplication] suspend];
+    [NSThread sleepForTimeInterval:0.7];
+    exit(0);
 }
 
 - (void)toggleEnableiPadStyleOniPhone:(UISwitch *)sender {

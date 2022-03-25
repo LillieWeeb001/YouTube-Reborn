@@ -3,3 +3,7 @@
 @interface RebornSettingsController : UITableViewController
 
 @end
+
+@interface UIApplication ()
+- (void)suspend;
+@end
