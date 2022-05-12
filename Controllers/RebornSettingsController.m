@@ -74,12 +74,12 @@
     [theTableView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section == 0) {
         if(indexPath.row == 0) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Notice" message:@"Are you sure you want to delete your set colour?" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Notice" message:@"Are you sure you want to reset colour settings?" preferredStyle:UIAlertControllerStyleAlert];
 
             [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             }]];
 
-            [alert addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kYTRebornColourOptionsVThree"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 exit(0);
