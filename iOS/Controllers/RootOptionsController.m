@@ -42,7 +42,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return 6;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -64,6 +64,9 @@
     }
     if (section == 4) {
         return 3;
+    }
+    if (section == 5) {
+        return 0;
     }
     return 0;
 }
@@ -311,7 +314,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (section == 4) {
+    if (section == 5) {
         return @"Version: 3.1.0 (Beta)";
     }
     return nil;
@@ -322,8 +325,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0 || section == 1 || section == 2 || section == 4) {
-        return 50;
+    if (section == 0 || section == 1 || section == 2 || section == 4 || section == 5) {
+        return 60;
     }
     return 0;
 }
@@ -345,8 +348,8 @@
 }
 
 - (CGFloat)tableView:(UITableView*)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 4) {
-        return 50;
+    if (section == 5) {
+        return 60;
     }
     return 0;
 }
