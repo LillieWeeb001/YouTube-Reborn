@@ -12,7 +12,7 @@
 	[super loadView];
     [self setupRebornSettingsControllerView];
 
-    self.title = @"Reborn Options";
+    self.title = @"Reborn Settings";
 
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
     self.navigationItem.rightBarButtonItem = doneButton;
