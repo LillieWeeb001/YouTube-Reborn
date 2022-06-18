@@ -27,7 +27,7 @@
 
     UIWindow *boundsWindow = [[UIApplication sharedApplication] keyWindow];
 
-    artworkImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, boundsWindow.safeAreaInsets.top, self.view.bounds.size.width, 720)];
+    artworkImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, boundsWindow.safeAreaInsets.top, self.view.bounds.size.width, 480)];
     UIImage *artwork = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.artworkURL]];
     artworkImage.image = artwork;
 
@@ -35,7 +35,7 @@
         [self.view addSubview:artworkImage];
     }
 
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, boundsWindow.safeAreaInsets.top + 720, self.view.bounds.size.width, 50)];
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, boundsWindow.safeAreaInsets.top + 480, self.view.bounds.size.width, 50)];
     titleLabel.text = self.downloadTitle;
     titleLabel.numberOfLines = 2;
     titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -52,7 +52,7 @@
 
     [self.view addSubview:titleLabel];
 
-    downloadPercentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, boundsWindow.safeAreaInsets.top + 720 + titleLabel.frame.size.height, self.view.bounds.size.width, 50)];
+    downloadPercentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, boundsWindow.safeAreaInsets.top + 480 + titleLabel.frame.size.height, self.view.bounds.size.width, 50)];
     downloadPercentLabel.numberOfLines = 1;
     downloadPercentLabel.adjustsFontSizeToFitWidth = YES;
     // downloadPercentLabel.textAlignment = NSTextAlignmentCenter;
