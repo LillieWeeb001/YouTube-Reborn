@@ -20,13 +20,13 @@ jobs:
           submodules: recursive
           path: theos
 
-      - name: Checkout theos/sdks
+      - name: Checkout chrisharper22/sdks
         uses: actions/checkout@main
         with:
-          repository: theos/sdks
+          repository: chrisharper22/sdks
           ref: master 
-          sparse-checkout: iPhoneOS14.5.sdk
-          path: theos/sdks
+          sparse-checkout: iPhoneOS15.5.sdk
+          path: chrisharper22/sdks
 
       - name: Build Package 
         run: |
