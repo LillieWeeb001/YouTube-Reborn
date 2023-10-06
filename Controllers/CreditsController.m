@@ -85,7 +85,7 @@
     [theTableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/LillieH001"] options:@{} completionHandler:nil];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/LillieH1000"] options:@{} completionHandler:nil];
         }
     }
     if (indexPath.section == 1) {
