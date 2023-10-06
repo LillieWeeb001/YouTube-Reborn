@@ -9,7 +9,6 @@
 #import "DownloadsController.h"
 #import "SponsorBlockOptionsController.h"
 #import "OtherOptionsController.h"
-#import "ChangelogsController.h"
 #import "PictureInPictureOptionsController.h"
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
@@ -42,25 +41,22 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 4;
-    }
-    if (section == 1) {
         if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"filza://"]]) {
             return 2;
         } else {
             return 1;
         }
     }
-    if (section == 2) {
+    if (section == 1) {
         return 8;
     }
-    if (section == 3) {
-        return 3;
+    if (section == 2) {
+        return 2;
     }
     return 0;
 }
@@ -86,28 +82,13 @@
         if (indexPath.section == 0) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             if (indexPath.row == 0) {
-                cell.textLabel.text = @"PayPal";
-            }
-            if (indexPath.row == 1) {
-                cell.textLabel.text = @"Patreon";
-            }
-            if (indexPath.row == 2) {
-                cell.textLabel.text = @"Discord";
-            }
-            if (indexPath.row == 3) {
-                cell.textLabel.text = @"Reddit";
-            }
-        }
-        if (indexPath.section == 1) {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            if (indexPath.row == 0) {
                 cell.textLabel.text = @"View Downloads";
             }
             if (indexPath.row == 1) {
                 cell.textLabel.text = @"View Downloads In Filza";
             }
         }
-        if (indexPath.section == 2) {
+        if (indexPath.section == 1) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             if (indexPath.row == 0) {
                 cell.textLabel.text = @"Video Options";
@@ -134,7 +115,7 @@
                 cell.textLabel.text = @"Other Options";
             }
         }
-        if (indexPath.section == 3) {
+        if (indexPath.section == 2) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             if (indexPath.row == 0) {
                 cell.textLabel.text = @"Reborn Settings";
@@ -153,20 +134,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://paypal.me/LillieH001/"] options:@{} completionHandler:nil];
-        }
-        if (indexPath.row == 1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.patreon.com/lillieweeb"] options:@{} completionHandler:nil];
-        }
-        if (indexPath.row == 2) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://lillieh001.github.io/discord/youtuberebornv4.html"] options:@{} completionHandler:nil];
-        }
-        if (indexPath.row == 3) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.reddit.com/r/YouTubeReborn/"] options:@{} completionHandler:nil];
-        }
-    }
-    if (indexPath.section == 1) {
         if (indexPath.row == 0) {    
             DownloadsController *downloadsController = [[DownloadsController alloc] init];
             UINavigationController *downloadsControllerView = [[UINavigationController alloc] initWithRootViewController:downloadsController];
@@ -186,7 +153,7 @@
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:path] options:@{} completionHandler:nil];
         }
     }
-    if (indexPath.section == 2) {
+    if (indexPath.section == 1) {
         if (indexPath.row == 0) {    
             VideoOptionsController *videoOptionsController = [[VideoOptionsController alloc] initWithStyle:UITableViewStyleGrouped];
             UINavigationController *videoOptionsControllerView = [[UINavigationController alloc] initWithRootViewController:videoOptionsController];
@@ -253,7 +220,7 @@
             [self presentViewController:otherOptionsControllerView animated:YES completion:nil];
         }
     }
-    if (indexPath.section == 3) {
+    if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             RebornSettingsController *rebornSettingsController = [[RebornSettingsController alloc] initWithStyle:UITableViewStyleGrouped];
             UINavigationController *rebornSettingsControllerView = [[UINavigationController alloc] initWithRootViewController:rebornSettingsController];
@@ -262,11 +229,6 @@
             [self presentViewController:rebornSettingsControllerView animated:YES completion:nil];
         }
         if (indexPath.row == 1) {
-            ChangelogsController *changelogsController = [[ChangelogsController alloc] init];
-
-            [self presentViewController:changelogsController animated:YES completion:nil];
-        }
-        if (indexPath.row == 2) {
             CreditsController *creditsController = [[CreditsController alloc] initWithStyle:UITableViewStyleGrouped];
             UINavigationController *creditsControllerView = [[UINavigationController alloc] initWithRootViewController:creditsController];
             creditsControllerView.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -277,15 +239,15 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 3) {
+    if (section == 2) {
         return 50;
     }
     return 0;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (section == 3) {
-        return @"Version: 4.0.9";
+    if (section == 2) {
+        return @"Version: 4.1.0";
     }
     return nil;
 }
