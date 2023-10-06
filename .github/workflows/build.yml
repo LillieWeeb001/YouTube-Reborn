@@ -1,0 +1,41 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "v4" ]
+  pull_request:
+    branches: [ "v4" ]
+    
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Checkout theos/theos
+        uses: actions/checkout@main
+        with:
+          repository: theos/theos
+          ref: master
+          submodules: recursive
+          path: theos
+
+      - name: Checkout theos/sdks
+        uses: actions/checkout@main
+        with:
+          repository: theos/sdks
+          ref: master 
+          sparse-checkout: iPhoneOS14.5.sdk
+          path: theos/sdks
+
+      - name: Build Package 
+        run: |
+          brew install make xz ldid 
+          export THEOS=theos
+          gmake clean package FINALPACKAGE=1
+          gmake clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: packages/*.deb
