@@ -8,9 +8,9 @@
     
     NSURL *requestURL;
     if ([client isEqual:@"android"]) {
-        requestURL = [NSURL URLWithString:@"https://www.youtube.com/youtubei/v1/player?key=AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w&prettyPrint=false"]
+        requestURL = [NSURL URLWithString:@"https://www.youtube.com/youtubei/v1/player?key=AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w&prettyPrint=false"];
     } else if ([client isEqual:@"ios"]) {
-        requestURL = [NSURL URLWithString:@"https://www.youtube.com/youtubei/v1/player?key=AIzaSyB-63vPrdThhKuerbB2N_l7Kwwcxj6yUAc&prettyPrint=false"]
+        requestURL = [NSURL URLWithString:@"https://www.youtube.com/youtubei/v1/player?key=AIzaSyB-63vPrdThhKuerbB2N_l7Kwwcxj6yUAc&prettyPrint=false"];
     }
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"POST"];
