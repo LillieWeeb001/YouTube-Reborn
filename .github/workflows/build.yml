@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: chrisharper22/sdks
-          ref: master 
+          ref: main
           sparse-checkout: iPhoneOS15.5.sdk
           path: chrisharper22/sdks
 
