@@ -1,4 +1,4 @@
-TARGET := iphone:clang:15.5:14.0
+TARGET := iphone:clang:14.5:14.0
 INSTALL_TARGET_PROCESSES = YouTube
 GO_EASY_ON_ME = 1
 
