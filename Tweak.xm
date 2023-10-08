@@ -770,19 +770,6 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
 }
 %end
 
-BOOL dNoSearchAds = NO;
-
-%group gNoSearchAds
-%hook YTIElementRenderer
-- (NSData *)elementData {
-    if (self.hasCompatibilityOptions && self.compatibilityOptions.hasAdLoggingData) {
-        return nil;
-    }
-    return %orig;
-}
-%end
-%end
-
 %group gNoVideoAds
 %hook YTIPlayerResponse
 - (BOOL)isMonetized {
