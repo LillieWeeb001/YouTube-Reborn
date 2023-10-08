@@ -789,22 +789,61 @@ BOOL dNoSearchAds = NO;
     return NO;
 }
 %end
+
 %hook YTDataUtils
-+ (id)spamSignalsDictionary {
-    return NULL;
-}
++ (id)spamSignalsDictionary { return nil; }
++ (id)spamSignalsDictionaryWithoutIDFA { return nil; }
 %end
+
 %hook YTAdsInnerTubeContextDecorator
 - (void)decorateContext:(id)arg1 {
 }
 %end
-%hook YTSectionListViewController
-- (void)loadWithModel:(id)model {
-    if (!dNoSearchAds) {
-        %init(gNoSearchAds);
-        dNoSearchAds = YES;
+
+%hook YTAccountScopedAdsInnerTubeContextDecorator
+- (void)decorateContext:(id)context {}
+%end
+
+%hook YTIElementRenderer
+- (NSData *)elementData {
+    if (self.hasCompatibilityOptions && self.compatibilityOptions.hasAdLoggingData) return nil;
+    return %orig;
+}
+%end
+
+BOOL isAd(id node) {
+    if ([node isKindOfClass:NSClassFromString(@"YTVideoWithContextNode")]
+        && [node respondsToSelector:@selector(parentResponder)]
+        && [[(YTVideoWithContextNode *)node parentResponder] isKindOfClass:NSClassFromString(@"YTAdVideoElementsCellController")])
+        return YES;
+    if ([node isKindOfClass:NSClassFromString(@"ELMCellNode")]) {
+        NSString *description = [[[node controller] owningComponent] description];
+        if ([description containsString:@"brand_promo"]
+            || [description containsString:@"statement_banner"]
+            || [description containsString:@"product_carousel"]
+            || [description containsString:@"product_engagement_panel"]
+            || [description containsString:@"product_item"]
+            || [description containsString:@"text_search_ad"]
+            || [description containsString:@"text_image_button_layout"]
+            || [description containsString:@"carousel_headered_layout"]
+            || [description containsString:@"carousel_footered_layout"]
+            || [description containsString:@"square_image_layout"] // install app ad
+            || [description containsString:@"landscape_image_wide_button_layout"]
+            || [description containsString:@"feed_ad_metadata"])
+            return YES;
     }
-    %orig;
+    return NO;
+}
+
+%hook YTAsyncCollectionView
+- (id)collectionView:(id)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    _ASCollectionViewCell *cell = %orig;
+    if ([cell isKindOfClass:NSClassFromString(@"YTCompactPromotedVideoCell")]
+        || ([cell isKindOfClass:NSClassFromString(@"_ASCollectionViewCell")]
+            && [cell respondsToSelector:@selector(node)]
+            && isAd([cell node])))
+                [self deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+    return cell;
 }
 %end
 %end
@@ -1118,6 +1157,11 @@ BOOL dNoSearchAds = NO;
 %end
 
 %group gDisableDoubleTapToSkip
+%hook YTMainAppVideoPlayerOverlayViewController
+- (BOOL)allowDoubleTapToSeekGestureRecognizer {
+    return NO;
+}
+%end
 %hook YTDoubleTapToSeekController
 - (void)enableDoubleTapToSeek:(BOOL)arg1 {
     %orig(NO);
@@ -1135,8 +1179,8 @@ BOOL dNoSearchAds = NO;
 
 %group gHideOverlayDarkBackground
 %hook YTMainAppVideoPlayerOverlayView
-- (void)setBackgroundVisible:(BOOL)arg1 {
-    %orig(NO);
+- (void)setBackgroundVisible:(BOOL)arg1 isGradientBackground:(BOOL)arg2 {
+    %orig(NO, arg2);
 }
 %end
 %end
@@ -1313,98 +1357,88 @@ BOOL dNoSearchAds = NO;
 
 %group gHideShortsLikeButton
 %hook YTReelWatchPlaybackOverlayView
-- (void)layoutSubviews {
-	%orig();
-	MSHookIvar<YTQTMButton *>(self, "_reelLikeButton").hidden = YES;
+- (void)setReelLikeButton:(id)arg1 {
+    %orig;
 }
 %end
 %end
 
 %group gHideShortsDislikeButton
 %hook YTReelWatchPlaybackOverlayView
-- (void)layoutSubviews {
-	%orig();
-	MSHookIvar<YTQTMButton *>(self, "_reelDislikeButton").hidden = YES;
+- (void)setReelDislikeButton:(id)arg1 {
+    %orig;
 }
 %end
 %end
 
 %group gHideShortsCommentsButton
 %hook YTReelWatchPlaybackOverlayView
-- (void)layoutSubviews {
-	%orig();
-	MSHookIvar<YTQTMButton *>(self, "_viewCommentButton").hidden = YES;
+- (void)setViewCommentButton:(id)arg1 {
+    %orig;
+}
+%end
+%end
+
+%group gHideShortsRemixButton
+%hook YTReelWatchPlaybackOverlayView
+- (void)setRemixButton:(id)arg1 {
+    %orig;
 }
 %end
 %end
 
 %group gHideShortsShareButton
 %hook YTReelWatchPlaybackOverlayView
-- (void)layoutSubviews {
-	%orig();
-	MSHookIvar<YTQTMButton *>(self, "_shareButton").hidden = YES;
+- (void)setShareButton:(id)arg1 {
+    %orig;
+}
+%end
+%end
+
+%group gHideShortsSubscriptionsButton
+%hook YTReelWatchRootViewController
+- (void)setPausedStateCarouselView {
 }
 %end
 %end
 
 %group gColourOptions
-%hook UIView
-- (void)setBackgroundColor:(UIColor *)color {
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTPivotBarView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTSlideForActionsView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTChipCloudCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTEngagementPanelView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTPlaylistPanelProminentThumbnailVideoCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTPlaylistHeaderView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTAsyncCollectionView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTLinkCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTMessageCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTSearchView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTDrawerAvatarCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTFeedHeaderView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatTextCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatViewerEngagementCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTCommentsHeaderView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatTickerViewController")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTEditSheetControllerHeader")]) {
-        color = rebornHexColour;
-    }
-    %orig;
+%hook YTCommonColorPalette
+- (UIColor *)background1 {
+    return rebornHexColour;
+}
+- (UIColor *)background2 {
+    return rebornHexColour;
+}
+- (UIColor *)background3 {
+    return rebornHexColour;
+}
+- (UIColor *)baseBackground {
+    return rebornHexColour;
+}
+- (UIColor *)brandBackgroundSolid {
+    return rebornHexColour;
+}
+- (UIColor *)brandBackgroundPrimary {
+    return rebornHexColour;
+}
+- (UIColor *)brandBackgroundSecondary {
+    return rebornHexColour;
+}
+- (UIColor *)raisedBackground {
+    return rebornHexColour;
+}
+- (UIColor *)staticBrandBlack {
+    return rebornHexColour;
+}
+- (UIColor *)generalBackgroundA {
+    return rebornHexColour;
+}
+- (UIColor *)generalBackgroundB {
+    return rebornHexColour;
+}
+- (UIColor *)menuBackground {
+    return rebornHexColour;
 }
 %end
 %hook YTAsyncCollectionView
@@ -1714,6 +1748,24 @@ BOOL dNoSearchAds = NO;
         }
         responder = [responder nextResponder];
     }
+}
+- (void)didMoveToWindow {
+    %orig;
+        if ([self.nextResponder isKindOfClass:%c(ASScrollView)]) { self.backgroundColor = [UIColor clearColor]; }
+        if ([self.accessibilityIdentifier isEqualToString:@"brand.promo_view"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"eml.cvr"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"eml.topic_channel_details"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"rich_header"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.ui.comment_cell"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.ui.comment_thread"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.ui.cancel.button"]) { self.superview.backgroundColor = [UIColor clearColor]; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.elements.components.comment_composer"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.elements.components.filter_chip_bar"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.elements.components.video_list_entry"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.comment.guidelines_text"]) { self.superview.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.comment.channel_guidelines_bottom_sheet_container"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.comment.channel_guidelines_entry_banner_container"]) { self.backgroundColor = rebornHexColour; }
+	if ([self.accessibilityIdentifier isEqualToString:@"id.comment.comment_group_detail_container"]) { self.backgroundColor = [UIColor clearColor]; }
 }
 %end
 %hook YTCinematicContainerView
@@ -2253,7 +2305,9 @@ BOOL selectedTabIndex = NO;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsLikeButton"] == YES) %init(gHideShortsLikeButton);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsDislikeButton"] == YES) %init(gHideShortsDislikeButton);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsCommentsButton"] == YES) %init(gHideShortsCommentsButton);
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsRemixButton"] == YES) %init(gHideShortsRemixButton);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsShareButton"] == YES) %init(gHideShortsShareButton);
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsSubscriptionsButton"] == YES) %init(gHideShortsSubscriptionsButton);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kAutoFullScreen"] == YES) %init(gAutoFullScreen);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideYouTubeLogo"] == YES) %init(gHideYouTubeLogo);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kDisableRelatedVideosInOverlay"] == YES) %init(gDisableRelatedVideosInOverlay);
