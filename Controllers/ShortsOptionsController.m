@@ -25,7 +25,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 7;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -69,18 +69,32 @@
             cell.accessoryView = hideShortsCommentsButton;
         }
         if (indexPath.row == 3) {
+            cell.textLabel.text = @"Hide Remix Button";
+            UISwitch *hideShortsRemixButton = [[UISwitch alloc] initWithFrame:CGRectZero];
+            [hideShortsRemixButton addTarget:self action:@selector(toggleHideShortsRemixButton:) forControlEvents:UIControlEventValueChanged];
+            hideShortsRemixButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsRemixButton"];
+            cell.accessoryView = hideShortsRemixButton;
+        }
+        if (indexPath.row == 4) {
             cell.textLabel.text = @"Hide Share Button";
             UISwitch *hideShortsShareButton = [[UISwitch alloc] initWithFrame:CGRectZero];
             [hideShortsShareButton addTarget:self action:@selector(toggleHideShortsShareButton:) forControlEvents:UIControlEventValueChanged];
             hideShortsShareButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsShareButton"];
             cell.accessoryView = hideShortsShareButton;
         }
-        if (indexPath.row == 4) {
+        if (indexPath.row == 5) {
             cell.textLabel.text = @"Hide More Actions Button";
             UISwitch *hideShortsMoreActionsButton = [[UISwitch alloc] initWithFrame:CGRectZero];
             [hideShortsMoreActionsButton addTarget:self action:@selector(toggleHideShortsMoreActionsButton:) forControlEvents:UIControlEventValueChanged];
             hideShortsMoreActionsButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsMoreActionsButton"];
             cell.accessoryView = hideShortsMoreActionsButton;
+        }
+        if (indexPath.row == 6) {
+            cell.textLabel.text = @"Hide Subscriptions Button";
+            UISwitch *hideShortsSubscriptionsButton = [[UISwitch alloc] initWithFrame:CGRectZero];
+            [hideShortsSubscriptionsButton addTarget:self action:@selector(toggleHideShortsSubscriptionsButton:) forControlEvents:UIControlEventValueChanged];
+            hideShortsSubscriptionsButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsSubscriptionsButton"];
+            cell.accessoryView = hideShortsSubscriptionsButton;
         }
     }
     return cell;
@@ -153,12 +167,32 @@
     }
 }
 
+- (void)toggleHideShortsRemixButton:(UISwitch *)sender {
+    if ([sender isOn]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kHideShortsRemixButton"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"kHideShortsRemixButton"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
 - (void)toggleHideShortsShareButton:(UISwitch *)sender {
     if ([sender isOn]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kHideShortsShareButton"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"kHideShortsShareButton"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (void)toggleHideShortsSubscriptionsButton:(UISwitch *)sender {
+    if ([sender isOn]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kHideShortsSubscriptionsButton"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"kHideShortsSubscriptionsButton"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
