@@ -149,7 +149,9 @@
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kHideShortsLikeButton"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kHideShortsDislikeButton"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kHideShortsCommentsButton"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kHideShortsRemixButton"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kHideShortsShareButton"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kHideShortsSubscriptionsButton"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kAutoFullScreen"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kHideYouTubeLogo"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kDisableRelatedVideosInOverlay"];
