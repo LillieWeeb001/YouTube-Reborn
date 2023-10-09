@@ -121,9 +121,6 @@
                 cell.textLabel.text = @"Reborn Settings";
             }
             if (indexPath.row == 1) {
-                cell.textLabel.text = @"Changelogs";
-            }
-            if (indexPath.row == 2) {
                 cell.textLabel.text = @"Credits";
             }
         }
