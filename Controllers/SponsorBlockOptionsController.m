@@ -21,11 +21,11 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 8;
+    return 9;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0 || section == 1 || section == 2 || section == 3 || section == 4 || section == 5 || section == 6 || section == 7) {
+    if (section == 0 || section == 1 || section == 2 || section == 3 || section == 4 || section == 5 || section == 6 || section == 7 || section == 8) {
         return 1;
     }
     return 0;
@@ -151,6 +151,20 @@
         }
         if (indexPath.section == 7) {
             if (indexPath.row == 0) {
+                NSArray *fillerItemArray = [NSArray arrayWithObjects:@"Disable", @"Auto Skip", @"Manual Skip", nil];
+                UISegmentedControl *fillerSegmentedControl = [[UISegmentedControl alloc] initWithItems:fillerItemArray];
+                fillerSegmentedControl.frame = CGRectMake(0, 5, self.view.bounds.size.width, cell.bounds.size.height - 10);
+                [fillerSegmentedControl addTarget:self action:@selector(actionFillerSegmentedControl:) forControlEvents:UIControlEventValueChanged];
+                if (![[NSUserDefaults standardUserDefaults] integerForKey:@"kFillerSegmentedInt"]) {
+                    fillerSegmentedControl.selectedSegmentIndex = 0;
+                } else {
+                    fillerSegmentedControl.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"kFillerSegmentedInt"];
+                }
+                [cell addSubview:fillerSegmentedControl];
+            }
+        }
+        if (indexPath.section == 8) {
+            if (indexPath.row == 0) {
                 NSArray *musicofftopicItemArray = [NSArray arrayWithObjects:@"Disable", @"Auto Skip", @"Manual Skip", nil];
                 UISegmentedControl *musicofftopicSegmentedControl = [[UISegmentedControl alloc] initWithItems:musicofftopicItemArray];
                 musicofftopicSegmentedControl.frame = CGRectMake(0, 5, self.view.bounds.size.width, cell.bounds.size.height - 10);
@@ -168,7 +182,7 @@
 }
 
 - (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0 || section == 1 || section == 2 || section == 3 || section == 4 || section == 5 || section == 6 || section == 7) {
+    if (section == 0 || section == 1 || section == 2 || section == 3 || section == 4 || section == 5 || section == 6 || section == 7 || section == 8) {
         return 50;
     }
     return 0;
@@ -197,6 +211,9 @@
         return @"Preview";
     }
     if (section == 7) {
+        return @"Filler Tangent/Jokes";
+    }
+    if (section == 8) {
         return @"Music_offtopic";
     }
     return nil;
@@ -268,6 +285,11 @@
 
 - (void)actionPreviewSegmentedControl:(UISegmentedControl *)sender {
     [[NSUserDefaults standardUserDefaults] setInteger:sender.selectedSegmentIndex forKey:@"kPreviewSegmentedInt"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)actionFillerSegmentedControl:(UISegmentedControl *)sender {
+    [[NSUserDefaults standardUserDefaults] setInteger:sender.selectedSegmentIndex forKey:@"kFillerSegmentedInt"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

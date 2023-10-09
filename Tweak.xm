@@ -1883,7 +1883,7 @@ NSDictionary *sponsorBlockValues = [[NSDictionary alloc] init];
     sponsorSkipCheck = NO;
     sponsorSkipShowing = NO;
     %orig();
-    NSString *options = @"[%22sponsor%22,%22selfpromo%22,%22interaction%22,%22intro%22,%22outro%22,%22preview%22,%22music_offtopic%22]";
+    NSString *options = @"[%22sponsor%22,%22selfpromo%22,%22interaction%22,%22intro%22,%22outro%22,%22preview%22,%22filler%22,%22music_offtopic%22]";
     NSURLRequest *request;
     if (![[NSUserDefaults standardUserDefaults] integerForKey:@"kSourceSegmentedInt"] || [[NSUserDefaults standardUserDefaults] integerForKey:@"kSourceSegmentedInt"] == 0) {
         request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://sponsor.ajay.app/api/skipSegments?videoID=%@&categories=%@", self.currentVideoID, options]]];
@@ -2099,6 +2099,43 @@ NSDictionary *sponsorBlockValues = [[NSDictionary alloc] init];
                     [self seekToTime:[[jsonDictionary objectForKey:@"segment"][1] floatValue]];
                 }
                 if ([[NSUserDefaults standardUserDefaults] integerForKey:@"kPreviewSegmentedInt"] == 2 && !sponsorSkipShowing && !sponsorSkipCheck) {
+                    sponsorSkipShowing = YES;
+                    UIAlertController *alertSkip = [UIAlertController alertControllerWithTitle:@"Preview Detected" message:@"Would you like to skip?" preferredStyle:UIAlertControllerStyleAlert];
+
+                    [alertSkip addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        sponsorSkipCheck = YES;
+                        sponsorSkipShowing = NO;
+                    }]];
+
+                    [alertSkip addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        sponsorSkipCheck = YES;
+                        [self seekToTime:[[jsonDictionary objectForKey:@"segment"][1] floatValue]];
+                        sponsorSkipCheck = NO;
+                        sponsorSkipShowing = NO;
+                    }]];
+
+                    UIViewController *topViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+                    while (true) {
+                        if (topViewController.presentedViewController) {
+                            topViewController = topViewController.presentedViewController;
+                        } else if ([topViewController isKindOfClass:[UINavigationController class]]) {
+                            UINavigationController *nav = (UINavigationController *)topViewController;
+                            topViewController = nav.topViewController;
+                        } else if ([topViewController isKindOfClass:[UITabBarController class]]) {
+                            UITabBarController *tab = (UITabBarController *)topViewController;
+                            topViewController = tab.selectedViewController;
+                        } else {
+                            break;
+                        }
+                    }
+                    [topViewController presentViewController:alertSkip animated:YES completion:nil];
+                }
+                break;
+            } else if ([[jsonDictionary objectForKey:@"category"] isEqual:@"filler"] && [[NSUserDefaults standardUserDefaults] integerForKey:@"kFillerSegmentedInt"] && self.currentVideoMediaTime >= [[jsonDictionary objectForKey:@"segment"][0] floatValue] && self.currentVideoMediaTime <= ([[jsonDictionary objectForKey:@"segment"][1] floatValue] - 1)) {
+                if ([[NSUserDefaults standardUserDefaults] integerForKey:@"kFillerSegmentedInt"] == 1) {
+                    [self seekToTime:[[jsonDictionary objectForKey:@"segment"][1] floatValue]];
+                }
+                if ([[NSUserDefaults standardUserDefaults] integerForKey:@"kFillerSegmentedInt"] == 2 && !sponsorSkipShowing && !sponsorSkipCheck) {
                     sponsorSkipShowing = YES;
                     UIAlertController *alertSkip = [UIAlertController alertControllerWithTitle:@"Preview Detected" message:@"Would you like to skip?" preferredStyle:UIAlertControllerStyleAlert];
 
