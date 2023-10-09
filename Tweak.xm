@@ -1027,9 +1027,6 @@ BOOL dNoSearchAds = NO;
 
 %group gHideOverlayDarkBackground
 %hook YTMainAppVideoPlayerOverlayView
-- (void)setBackgroundVisible:(BOOL)arg1 {
-    %orig(NO);
-}
 - (void)setBackgroundVisible:(BOOL)arg1 isGradientBackground:(BOOL)arg2 {
     %orig(NO, arg2);
 }
