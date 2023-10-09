@@ -1348,63 +1348,42 @@ BOOL dNoSearchAds = NO;
 %end
 
 %group gColourOptions
-%hook UIView
-- (void)setBackgroundColor:(UIColor *)color {
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTPivotBarView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTSlideForActionsView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTChipCloudCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTEngagementPanelView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTPlaylistPanelProminentThumbnailVideoCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTPlaylistHeaderView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTAsyncCollectionView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTLinkCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTMessageCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTSearchView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTDrawerAvatarCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTFeedHeaderView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatTextCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatViewerEngagementCell")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTCommentsHeaderView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatView")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YCHLiveChatTickerViewController")]) {
-        color = rebornHexColour;
-    }
-    if ([self.nextResponder isKindOfClass:NSClassFromString(@"YTEditSheetControllerHeader")]) {
-        color = rebornHexColour;
-    }
-    %orig;
+%hook YTCommonColorPalette
+- (UIColor *)background1 {
+    return rebornHexColour;
+}
+- (UIColor *)background2 {
+    return rebornHexColour;
+}
+- (UIColor *)background3 {
+    return rebornHexColour;
+}
+- (UIColor *)baseBackground {
+    return rebornHexColour;
+}
+- (UIColor *)brandBackgroundSolid {
+    return rebornHexColour;
+}
+- (UIColor *)brandBackgroundPrimary {
+    return rebornHexColour;
+}
+- (UIColor *)brandBackgroundSecondary {
+    return [rebornHexColour colorWithAlphaComponent:0.9];
+}
+- (UIColor *)raisedBackground {
+    return rebornHexColour;
+}
+- (UIColor *)staticBrandBlack {
+    return rebornHexColour;
+}
+- (UIColor *)generalBackgroundA {
+    return rebornHexColour;
+}
+- (UIColor *)generalBackgroundB {
+    return rebornHexColour;
+}
+- (UIColor *)menuBackground {
+    return rebornHexColour;
 }
 %end
 %hook YTAsyncCollectionView
@@ -1714,6 +1693,25 @@ BOOL dNoSearchAds = NO;
         }
         responder = [responder nextResponder];
     }
+}
+- (void)didMoveToWindow {
+    %orig;
+        if ([self.nextResponder isKindOfClass:%c(ASScrollView)]) { self.backgroundColor = [UIColor clearColor]; }
+        if ([self.accessibilityIdentifier isEqualToString:@"brand_promo.view"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"eml.cvr"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"eml.topic_channel_details"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"rich_header"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.ui.comment_cell"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.ui.comment_thread"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.ui.cancel.button"]) { self.superview.backgroundColor = [UIColor clearColor]; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.elements.components.comment_composer"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.elements.components.filter_chip_bar"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.elements.components.video_list_entry"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.comment.guidelines_text"]) { self.superview.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.comment.timed_comments_welcome"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.comment.channel_guidelines_bottom_sheet_container"]) { self.backgroundColor = rebornHexColour; }
+        if ([self.accessibilityIdentifier isEqualToString:@"id.comment.channel_guidelines_entry_banner_container"]) { self.backgroundColor = rebornHexColour; }
+	if ([self.accessibilityIdentifier isEqualToString:@"id.comment.comment_group_detail_container"]) { self.backgroundColor = [UIColor clearColor]; }
 }
 %end
 %hook YTCinematicContainerView
