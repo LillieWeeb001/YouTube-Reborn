@@ -23,9 +23,19 @@ class EnableNoAds2: ClassHook<NSObject> { // Check Type
     class func spamSignalsDictionary() -> Any? {
         return nil
     }
+    class func spamSignalsDictionaryWithoutIDFA() -> Any? {
+        return nil
+    }
 }
 class EnableNoAds3: ClassHook<NSObject> { // Check Type
     static let targetName = "YTAdsInnerTubeContextDecorator"
+    typealias Group = EnableNoAds
+
+    func decorateContext(_ arg1: Any?) {
+    }
+}
+class EnableNoAds4: ClassHook<NSObject> { // Check Type
+    static let targetName = "YTAccountScopedAdsInnerTubeContextDecorator"
     typealias Group = EnableNoAds
 
     func decorateContext(_ arg1: Any?) {

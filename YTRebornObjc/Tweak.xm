@@ -670,31 +670,6 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
 }
 %end
 
-BOOL dNoSearchAds = NO;
-
-%group gNoSearchAds
-%hook YTIElementRenderer
-- (NSData *)elementData {
-    if (self.hasCompatibilityOptions && self.compatibilityOptions.hasAdLoggingData) {
-        return nil;
-    }
-    return %orig;
-}
-%end
-%end
-
-%group gNoVideoAds
-%hook YTSectionListViewController
-- (void)loadWithModel:(id)model {
-    if (!dNoSearchAds) {
-        %init(gNoSearchAds);
-        dNoSearchAds = YES;
-    }
-    %orig;
-}
-%end
-%end
-
 %group gExtraSpeedOptions
 %hook YTVarispeedSwitchController
 - (void *)init {
@@ -1956,9 +1931,6 @@ BOOL selectedTabIndex = NO;
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"kEnablePictureInPictureVTwo"] == nil) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kEnablePictureInPictureVTwo"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kEnableNoVideoAds"] == YES && [[NSUserDefaults standardUserDefaults] boolForKey:@"kRebornIHaveYouTubePremium"] == NO) {
-            %init(gNoVideoAds);
         }
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kNoCastButton"] == YES) %init(gNoCastButton);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kNoNotificationButton"] == YES) %init(gNoNotificationButton);
