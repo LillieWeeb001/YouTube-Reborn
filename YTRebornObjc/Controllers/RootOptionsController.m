@@ -38,7 +38,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 2;
+        return 3;
     }
     if (section == 1) {
         if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"filza://"]]) {
@@ -79,6 +79,9 @@
                 cell.textLabel.text = @"Donate";
             }
             if (indexPath.row == 1) {
+                cell.textLabel.text = @"Patreon";
+            }
+            if (indexPath.row == 2) {
                 cell.textLabel.text = @"Discord";
             }
         }
@@ -155,7 +158,10 @@
             [self presentViewController:alert animated:YES completion:nil];
         }
         if (indexPath.row == 1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://discord.gg/ydAyv2F9ng"] options:@{} completionHandler:nil];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://patreon.com/YouTubeReborn"] options:@{} completionHandler:nil];
+        }
+        if (indexPath.row == 2) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://discord.gg/nedVJ7Zp"] options:@{} completionHandler:nil];
         }
     }
     if (indexPath.section == 1) {
@@ -245,7 +251,7 @@
             [self presentViewController:rebornSettingsControllerView animated:YES completion:nil];
         }
         if (indexPath.row == 1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/LillieH1000/YouTube-Reborn/blob/v5/CHANGELOG.md"] options:@{} completionHandler:nil];
+            // [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/LillieH1000/YouTube-Reborn/blob/v5/CHANGELOG.md"] options:@{} completionHandler:nil];
         }
         if (indexPath.row == 2) {
             CreditsController *creditsController = [[CreditsController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -266,7 +272,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 3) {
-        return @"Version: 5.0.0 (Beta 2)";
+        return @"Version: 5.0.0 (Beta 3)";
     }
     return nil;
 }
