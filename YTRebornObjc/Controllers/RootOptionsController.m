@@ -9,6 +9,7 @@
 #import "DownloadsController.h"
 #import "SponsorBlockOptionsController.h"
 #import "OtherOptionsController.h"
+#import "ChangelogsController.h"
 #import "PictureInPictureOptionsController.h"
 
 @interface RootOptionsController ()
@@ -251,7 +252,9 @@
             [self presentViewController:rebornSettingsControllerView animated:YES completion:nil];
         }
         if (indexPath.row == 1) {
-            // [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/LillieH1000/YouTube-Reborn/blob/v5/CHANGELOG.md"] options:@{} completionHandler:nil];
+            ChangelogsController *changelogsController = [[ChangelogsController alloc] init];
+
+            [self presentViewController:changelogsController animated:YES completion:nil];
         }
         if (indexPath.row == 2) {
             CreditsController *creditsController = [[CreditsController alloc] initWithStyle:UITableViewStyleGrouped];
