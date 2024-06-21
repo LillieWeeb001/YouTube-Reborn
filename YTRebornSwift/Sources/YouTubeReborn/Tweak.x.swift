@@ -256,6 +256,42 @@ class DisableYouTubeKids5: ClassHook<UIViewController> {
     }
 }
 
+// Disable Hints
+struct DisableHints: HookGroup {}
+
+class DisableHints1: ClassHook<UIView> { // Check Type
+    static let targetName = "YTSettings"
+    typealias Group = DisableHints
+
+    func areHintsDisabled() -> Bool {
+        return true
+    }
+    func setHintsDisabled(_ arg1: Bool) {
+        orig.setHintsDisabled(true)
+    }
+}
+class DisableHints2: ClassHook<UIView> { // Check Type
+    static let targetName = "YTUserDefaults"
+    typealias Group = DisableHints
+
+    func areHintsDisabled() -> Bool {
+        return true
+    }
+    func setHintsDisabled(_ arg1: Bool) {
+        orig.setHintsDisabled(true)
+    }
+}
+
+// Defaults
+
+class UseAppThemeSetting: ClassHook<NSObject> { // Check Type
+    static let targetName = "YTColdConfig"
+
+    func shouldUseAppThemeSetting() -> Bool {
+        return true
+    }
+}
+
 // Loader
 
 struct YouTubeReborn: Tweak {
@@ -308,6 +344,11 @@ struct YouTubeReborn: Tweak {
         // Disable YouTube Kids
         if UserDefaults.standard.bool(forKey: "kDisableYouTubeKidsPopup") {
             DisableYouTubeKids().activate()
+        }
+
+        // Disable Hints
+        if UserDefaults.standard.bool(forKey: "kDisableHints") {
+            DisableHints().activate()
         }
     }
 }

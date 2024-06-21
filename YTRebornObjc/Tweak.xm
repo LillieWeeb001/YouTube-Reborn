@@ -803,25 +803,6 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
 %end
 %end
 
-%group gDisableHints
-%hook YTSettings
-- (BOOL)areHintsDisabled {
-	return YES;
-}
-- (void)setHintsDisabled:(BOOL)arg1 {
-    %orig(YES);
-}
-%end
-%hook YTUserDefaults
-- (BOOL)areHintsDisabled {
-	return YES;
-}
-- (void)setHintsDisabled:(BOOL)arg1 {
-    %orig(YES);
-}
-%end
-%end
-
 %group gHideShortsTab
 %hook YTPivotBarView
 - (void)setRenderer:(YTIPivotBarRenderer *)renderer {
@@ -1918,12 +1899,6 @@ BOOL selectedTabIndex = NO;
 }
 %end
 
-%hook YTColdConfig
-- (BOOL)shouldUseAppThemeSetting {
-    return YES;
-}
-%end
-
 %ctor {
     @autoreleasepool {
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"kEnableNoVideoAds"] == nil) {
@@ -1938,7 +1913,6 @@ BOOL selectedTabIndex = NO;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kNoNotificationButton"] == YES) %init(gNoNotificationButton);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kDisableVideoEndscreenPopups"] == YES) %init(gDisableVideoEndscreenPopups);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kEnableExtraSpeedOptions"] == YES) %init(gExtraSpeedOptions);
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kDisableHints"] == YES) %init(gDisableHints);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideTabBarLabels"] == YES) %init(gHideTabBarLabels);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideShortsTab"] == YES) %init(gHideShortsTab);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideUploadTab"] == YES) %init(gHideUploadTab);
