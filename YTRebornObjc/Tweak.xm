@@ -70,9 +70,6 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
 - (BOOL)isPictureInPicturePossible {
     return YES;
 }
-- (BOOL)canEnablePictureInPicture {
-    return YES;
-}
 - (BOOL)isPipSettingEnabled {
     return YES;
 }
@@ -113,6 +110,11 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
 %end
 %hook MLPIPController
 - (BOOL)pictureInPictureSupported {
+    return YES;
+}
+%end
+%hook MDXPlaybackController
+- (BOOL)isPictureInPicturePossible {
     return YES;
 }
 %end
