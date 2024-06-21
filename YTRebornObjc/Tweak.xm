@@ -4,6 +4,7 @@
 #import <YouTubeExtractor/YouTubeExtractor.h>
 #import <rootless.h>
 #import "Controllers/RootOptionsController.h"
+#import "Controllers/RebornPlayerController.h"
 #import "Controllers/YouTubeDownloadController.h"
 #import "Tweak.h"
 
@@ -243,6 +244,10 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
         }]];
     }
 
+    /* [alertMenu addAction:[UIAlertAction actionWithTitle:@"Play In Reborn Player" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self rebornPlayInRebornPlayer:videoIdentifier];
+    }]]; */
+    
     [alertMenu addAction:[UIAlertAction actionWithTitle:@"Play In External App" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self rebornPlayInExternalApp:videoIdentifier];
     }]];
@@ -472,6 +477,32 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
 
     UIViewController *rebornYouTubeDownloadViewController = self._viewControllerForAncestor;
     [rebornYouTubeDownloadViewController presentViewController:rebornYouTubeDownloadController animated:YES completion:nil];
+}
+
+%new;
+- (void)rebornPlayInRebornPlayer :(NSString *)videoID {
+    NSString *videoTime = [NSString stringWithFormat:@"%f", [resultOut mediaTime]];
+    NSDictionary *youtubePlayerRequest = [YouTubeExtractor youtubePlayerRequest:@"ios":videoID];
+    NSURL *videoPath = [NSURL URLWithString:[NSString stringWithFormat:@"%@", youtubePlayerRequest[@"streamingData"][@"hlsManifestUrl"]]];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kEnableBackgroundPlayback"] == YES) {
+        RebornPlayerController *rebornPlayerController = [[RebornPlayerController alloc] init];
+        rebornPlayerController.videoTime = videoTime;
+        rebornPlayerController.videoPath = videoPath;
+        UINavigationController *rebornPlayerNavController = [[UINavigationController alloc] initWithRootViewController:rebornPlayerController];
+        rebornPlayerNavController.modalPresentationStyle = UIModalPresentationFullScreen;
+
+        UIViewController *pictureInPictureViewController = self._viewControllerForAncestor;
+        [pictureInPictureViewController presentViewController:rebornPlayerNavController animated:YES completion:nil];
+    } else {
+        UIAlertController *alertPip = [UIAlertController alertControllerWithTitle:@"Notice" message:@"You must enable 'Background Playback' in YouTube Reborn settings to use yt reborns custom player" preferredStyle:UIAlertControllerStyleAlert];
+
+        [alertPip addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }]];
+
+        UIViewController *pipViewController = [self _viewControllerForAncestor];
+        [pipViewController presentViewController:alertPip animated:YES completion:nil];
+    }
 }
 
 %new;

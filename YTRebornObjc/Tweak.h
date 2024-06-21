@@ -43,6 +43,7 @@
 - (void)rebornVideoDownloader :(NSString *)videoID;
 - (void)rebornAudioDownloader :(NSString *)videoID;
 - (void)rebornPictureInPicture :(NSString *)videoID;
+- (void)rebornPlayInRebornPlayer :(NSString *)videoID;
 - (void)rebornPlayInExternalApp :(NSString *)videoID;
 @end
 
