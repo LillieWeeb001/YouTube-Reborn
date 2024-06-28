@@ -744,7 +744,7 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
 %hook YTSettings
 - (BOOL)disableMDXDeviceDiscovery {
     return YES;
-} 
+}
 %end
 %hook YTRightNavigationButtons
 - (void)layoutSubviews {
