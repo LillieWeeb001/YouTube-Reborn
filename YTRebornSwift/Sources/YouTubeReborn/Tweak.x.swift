@@ -108,7 +108,7 @@ class EnableBackgroundPlayback7: ClassHook<NSObject> { // Check Type
 // Allow HD On Cellular Data
 struct AllowHDOnCellularData: HookGroup {}
 
-class AllowHDOnCellularData1: ClassHook<NSObject> { // Check Type
+class AllowHDOnCellularData1: ClassHook<NSObject> {
     static let targetName = "YTUserDefaults"
     typealias Group = AllowHDOnCellularData
 
@@ -119,7 +119,7 @@ class AllowHDOnCellularData1: ClassHook<NSObject> { // Check Type
         orig.setDisableHDOnCellular(false)
     }
 }
-class AllowHDOnCellularData2: ClassHook<NSObject> { // Check Type
+class AllowHDOnCellularData2: ClassHook<NSObject> {
     static let targetName = "YTSettings"
     typealias Group = AllowHDOnCellularData
 
@@ -145,7 +145,7 @@ class DisableDoubleTapToSkip1: ClassHook<NSObject> {
         orig.showDoubleTapToSeekEducationView(false)
     }
 }
-class DisableDoubleTapToSkip2: ClassHook<NSObject> { // Check Type
+class DisableDoubleTapToSkip2: ClassHook<NSObject> {
     static let targetName = "YTSettings"
     typealias Group = DisableDoubleTapToSkip
 
@@ -259,7 +259,7 @@ class DisableYouTubeKids5: ClassHook<UIViewController> {
 // Disable Hints
 struct DisableHints: HookGroup {}
 
-class DisableHints1: ClassHook<UIView> { // Check Type
+class DisableHints1: ClassHook<UIView> {
     static let targetName = "YTSettings"
     typealias Group = DisableHints
 
@@ -270,7 +270,7 @@ class DisableHints1: ClassHook<UIView> { // Check Type
         orig.setHintsDisabled(true)
     }
 }
-class DisableHints2: ClassHook<UIView> { // Check Type
+class DisableHints2: ClassHook<UIView> {
     static let targetName = "YTUserDefaults"
     typealias Group = DisableHints
 
@@ -284,7 +284,7 @@ class DisableHints2: ClassHook<UIView> { // Check Type
 
 // Defaults
 
-class UseAppThemeSetting: ClassHook<NSObject> { // Check Type
+class UseAppThemeSetting: ClassHook<NSObject> {
     static let targetName = "YTColdConfig"
 
     func shouldUseAppThemeSetting() -> Bool {
