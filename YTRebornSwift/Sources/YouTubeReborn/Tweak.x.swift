@@ -131,6 +131,38 @@ class AllowHDOnCellularData2: ClassHook<NSObject> {
     }
 }
 
+// Disable Video AutoPlay
+struct DisableVideoAutoPlay: HookGroup {}
+
+class DisableVideoAutoPlay1: ClassHook<NSObject> { // Check Type
+    static let targetName = "YTPlaybackConfig"
+    typealias Group = DisableVideoAutoPlay
+
+    func setStartPlayback(_ arg1: Bool) {
+        orig.setStartPlayback(false)
+    }
+}
+
+// Hide Player Bar Heatwave
+struct HidePlayerBarHeatwave: HookGroup {}
+
+class HidePlayerBarHeatwave1: ClassHook<NSObject> { // Check Type
+    static let targetName = "YTPlayerBarHeatwaveView"
+    typealias Group = HidePlayerBarHeatwave
+
+    func initWithFrame(_ arg1: CGRect, heatmap arg2: -> Any?) -> Any? {
+        return nil
+    }
+}
+class HidePlayerBarHeatwave2: ClassHook<NSObject> { // Check Type
+    static let targetName = "YTPlayerBarController"
+    typealias Group = HidePlayerBarHeatwave
+
+    func setHeatmap(_ arg1: Any?) {
+        orig.setHeatmap(nil)
+    }
+}
+
 // Disable Double Tap To Skip
 struct DisableDoubleTapToSkip: HookGroup {}
 
@@ -314,6 +346,16 @@ struct YouTubeReborn: Tweak {
         // Allow HD On Cellular Data
         if UserDefaults.standard.bool(forKey: "kAllowHDOnCellularData") {
             AllowHDOnCellularData().activate()
+        }
+
+        // Disable Video AutoPlay
+        if UserDefaults.standard.bool(forKey: "kDisableVideoAutoPlay") {
+            DisableVideoAutoPlay().activate()
+        }
+
+        // Hide Player Bar Heatwave
+        if UserDefaults.standard.bool(forKey: "kHidePlayerBarHeatwave") {
+            HidePlayerBarHeatwave().activate()
         }
 
         // Disable Double Tap To Skip        

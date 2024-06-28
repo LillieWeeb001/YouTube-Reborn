@@ -962,14 +962,6 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
 %end
 %end
 
-%group gDisableVideoAutoPlay
-%hook YTPlaybackConfig
-- (void)setStartPlayback:(BOOL)arg1 {
-	%orig(NO);
-}
-%end
-%end
-
 %group gHideAutoPlaySwitchInOverlay
 %hook YTMainAppControlsOverlayView
 - (void)layoutSubviews {
@@ -1498,19 +1490,6 @@ YTMainAppVideoPlayerOverlayViewController *stateOut;
 %end
 %end
 
-%group gHidePlayerBarHeatwave
-%hook YTPlayerBarHeatwaveView
-- (id)initWithFrame:(CGRect)frame heatmap:(id)heat {
-    return NULL;
-}
-%end
-%hook YTPlayerBarController
-- (void)setHeatmap:(id)arg1 {
-    %orig(NULL);
-}
-%end
-%end
-
 %group gHidePictureInPictureAdsBadge
 %hook YTPlayerPIPController
 - (void)displayAdsBadge {
@@ -1951,7 +1930,6 @@ BOOL selectedTabIndex = NO;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideYouTab"] == YES) %init(gHideYouTab);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHidePreviousButtonInOverlay"] == YES) %init(gHidePreviousButtonInOverlay);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideNextButtonInOverlay"] == YES) %init(gHideNextButtonInOverlay);
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kDisableVideoAutoPlay"] == YES) %init(gDisableVideoAutoPlay);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideAutoPlaySwitchInOverlay"] == YES) %init(gHideAutoPlaySwitchInOverlay);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideCaptionsSubtitlesButtonInOverlay"] == YES) %init(gHideCaptionsSubtitlesButtonInOverlay);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kDisableVideoInfoCards"] == YES) %init(gDisableVideoInfoCards);
@@ -1967,7 +1945,6 @@ BOOL selectedTabIndex = NO;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kDisableRelatedVideosInOverlay"] == YES) %init(gDisableRelatedVideosInOverlay);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHideOverlayQuickActions"] == YES) %init(gHideOverlayQuickActions);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kEnableiPadStyleOniPhone"] == YES) %init(gEnableiPadStyleOniPhone);
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHidePlayerBarHeatwave"] == YES) %init(gHidePlayerBarHeatwave);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHidePictureInPictureAdsBadge"] == YES) %init(gHidePictureInPictureAdsBadge);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHidePictureInPictureSponsorBadge"] == YES) %init(gHidePictureInPictureSponsorBadge);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kHidePreviousButtonShadowInOverlay"] == YES) %init(gHidePreviousButtonShadowInOverlay);
