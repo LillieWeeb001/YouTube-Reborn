@@ -150,7 +150,7 @@ class HidePlayerBarHeatwave1: ClassHook<NSObject> { // Check Type
     static let targetName = "YTPlayerBarHeatwaveView"
     typealias Group = HidePlayerBarHeatwave
 
-    func initWithFrame(_ arg1: CGRect, heatmap arg2: -> Any?) -> Any? {
+    func initWithFrame(_ arg1: CGRect, heatmap arg2: Any?) -> Any? {
         return nil
     }
 }
